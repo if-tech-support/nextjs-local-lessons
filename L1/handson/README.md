@@ -1,0 +1,58 @@
+# lesson1 Hands-on README
+
+このハンズオンは、Next.js（App Router）とTailwind CSSで企業サイト（トップ／会社概要／サービス紹介）を0から実装する学習教材です。リポジトリの他ファイルに依存せず、本ディレクトリだけで読み進められます。
+
+## 目的
+
+- App Routerの基本（`layout.tsx`で共通UI、ファイルベースルーティング）を理解する
+- `next/link`でのページ遷移を使えるようになる
+- Tailwind CSSで設計どおりの見た目（色・余白・サイズ・ブレークポイント）を再現する
+
+## 前提
+
+- Node.js最新安定版（LTS推奨）
+- npm（またはyarn/pnpm）
+- React/TypeScriptの基礎知識
+
+## 進め方（各章の読み方）
+
+各章は「仕様／ヒント／解答例」の順で構成されています。
+
+1) 仕様
+- 画面構造・クラス・値を具体的に指定します。まずはここだけを見て5分前後で手を動かしてください。
+
+2) ヒント
+- 使うAPIやTailwindの代表的なクラス名を示します。詰まったら参照してください。
+
+3) 解答例
+- 実装の一例です。自力で書いた後に見比べ、差分を学びに変えましょう。
+
+時間の目安は各課題タイトルに記載しています。時間を決めて「まずやってみる」→「答え合わせ」の流れを徹底してください。
+
+## 章構成
+
+- 01-環境準備.md
+- 02-レイアウト作成.md
+- 03-トップページ.md
+- 04-会社概要ページ.md
+- 05-サービス紹介ページ.md
+- 06-仕上げと確認.md
+
+## 実行手順（最小）
+
+- 新規作成（例）
+  - 対話式: `npx create-next-app@latest web-world-creators`
+  - 一発作成（参考）: `npx create-next-app@latest web-world-creators --ts --eslint --app --src-dir --tailwind --import-alias "@/*"`
+- 起動
+  - `cd web-world-creators`
+  - `npm run dev`
+- ブラウザで`http://localhost:3000/`を開く
+
+## よくあるつまずき
+
+- Tailwindが効かない → `postcss.config`に`@tailwindcss/postcss`が入っているか、`globals.css`に`@tailwind base; @tailwind components; @tailwind utilities;`があるか確認
+- スタイルが微妙に違う → 任意値（例: `w-[46%]`、`max-[768px]`）を使ってピクセル相当で合わせる
+
+## ライセンス／注意
+
+- この教材は学習用途を想定しています。商用プロジェクトへ流用する場合は自己責任でお願いします。
