@@ -1,5 +1,3 @@
-# 01-外部APIからのデータ取得
-
 ## はじめに
 
 この章では、Next.jsで外部APIからデータを取得してユーザ一覧を表示する方法を学びます。JSONPlaceholderのAPIを使って実際のデータを取得し、ユーザ管理アプリの基盤を作成していきましょう。
@@ -43,7 +41,7 @@ Next.jsで外部APIからデータを取得する方法を学ぶ
 
 ### 解答例
 
-```tsx:src/app/users/page.tsx
+```tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -150,7 +148,7 @@ export default function UsersPage() {
 
 ### 解答例
 
-```tsx:src/app/layout.tsx
+```tsx
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';

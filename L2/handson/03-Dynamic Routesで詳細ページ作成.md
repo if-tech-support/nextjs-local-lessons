@@ -1,8 +1,6 @@
-# 02-Dynamic Routesで詳細ページ作成
-
 ## はじめに
 
-この章では、Next.jsのDynamic Routesを使ってユーザ詳細ページを作成します。URLパラメータからユーザIDを取得し、個別のユーザ情報を表示するページを実装していきましょう。
+この章では、Next.jsのDynamic Routesを使ってユーザ詳細ページを作成します。URLパラメーターからユーザIDを取得し、個別のユーザ情報を表示するページを実装していきましょう。
 
 ## 目的
 
@@ -10,8 +8,8 @@ Dynamic Routesを使った詳細ページの作成方法を学ぶ
 
 ## 学習対象のスキル
 
-- Dynamic Routes（`[id]`フォルダ）の作成
-- URLパラメータの取得
+- Dynamic Routes（`[id]`フォルダー）の作成
+- URLパラメーターの取得
 - 個別データの取得と表示
 
 ## 課題A：ユーザ詳細ページの作成
@@ -23,7 +21,7 @@ Dynamic Routesを使った詳細ページの作成方法を学ぶ
 `src/app/users/[id]/page.tsx`を作成し、以下の要件を満たしてください：
 
 - ページタイトル「ユーザ詳細」を`<h1>`で表示
-- URLパラメータからユーザIDを取得
+- URLパラメーターからユーザIDを取得
 - `https://jsonplaceholder.typicode.com/users/{id}`から該当ユーザのデータを取得
 - 取得したデータを以下の構造で表示：
   - ユーザ名（`<h2>`で表示）
@@ -44,7 +42,7 @@ Dynamic Routesを使った詳細ページの作成方法を学ぶ
 
 ### 解答例
 
-```tsx:src/app/users/[id]/page.tsx
+```tsx
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -130,9 +128,9 @@ export default function UserDetailPage({ params }: PageProps) {
           </p>
           <p className="text-gray-600">
             <span className="font-medium">ウェブサイト:</span>{' '}
-            <a 
-              href={`https://${user.website}`} 
-              target="_blank" 
+            <a
+              href={`https://${user.website}`}
+              target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 underline"
             >
@@ -174,7 +172,7 @@ export default function UserDetailPage({ params }: PageProps) {
 
 ### 解答例
 
-```tsx:src/app/users/[id]/BackButton.tsx
+```tsx
 export default function BackButton() {
   const handleBack = () => {
     window.history.back();
