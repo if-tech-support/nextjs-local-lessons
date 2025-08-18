@@ -6,10 +6,7 @@ import BackButton from "./BackButton";
 // 特定のユーザデータを取得する関数
 async function getUser(id: string): Promise<User> {
   const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`,
-    {
-      next: { revalidate: 3600 }, // 1時間キャッシュ
-    }
+    `https://jsonplaceholder.typicode.com/users/${id}`
   );
 
   if (!response.ok) {
@@ -102,7 +99,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
         </div>
       </div>
     );
-  } catch (error) {
+  } catch {
     notFound();
   }
 }
