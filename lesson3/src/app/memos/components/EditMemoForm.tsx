@@ -43,8 +43,8 @@ export default function EditMemoForm({ id, initialTitle, initialContent }: Props
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 p-4 border rounded bg-white">
-      <h3 className="font-semibold">編集</h3>
+    <form onSubmit={onSubmit} className="space-y-4 p-4 rounded bg-yellow-100">
+      <h3 className="font-semibold text-yellow-900">編集</h3>
       <div className="space-y-2">
         <label className="block text-sm">タイトル</label>
         <input
@@ -66,11 +66,7 @@ export default function EditMemoForm({ id, initialTitle, initialContent }: Props
       {error && <p className="text-sm text-red-600">{error}</p>}
       {saved && <p className="text-sm text-green-700">更新しました</p>}
       <div className="flex gap-2">
-        <button
-          type="submit"
-          disabled={loading}
-          className="inline-flex items-center text-white bg-green-600 hover:bg-green-700 disabled:opacity-50 px-4 py-2 rounded"
-        >
+        <button type="submit" disabled={loading} className="inline-flex bg-yellow-500 px-4 py-2 rounded">
           {loading ? '更新中...' : '更新'}
         </button>
       </div>

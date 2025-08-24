@@ -20,19 +20,19 @@ export default async function MemoDetail({ params }: { params: Promise<{ id: str
   if (!memo) return notFound();
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">メモ詳細</h1>
+      <h1 className="text-2xl font-bold text-yellow-900">メモ詳細</h1>
 
-      <div className="p-4 bg-white rounded border">
-        <h2 className="text-xl font-semibold">{memo.title}</h2>
+      <div className="p-4 bg-yellow-100 rounded">
+        <h2 className="text-xl font-semibold text-yellow-900">{memo.title}</h2>
         <p className="mt-2 whitespace-pre-wrap">{memo.content}</p>
-        <p className="mt-3 text-sm text-gray-500">
+        <p className="mt-3 text-sm text-yellow-800">
           作成: {new Date(memo.created_at).toLocaleString()} / 更新: {new Date(memo.updated_at).toLocaleString()}
         </p>
       </div>
 
       <EditMemoForm id={memo.id} initialTitle={memo.title} initialContent={memo.content} />
 
-      <div>
+      <div className="space-x-3">
         <DeleteMemoButton id={memo.id} />
         <BackButton />
       </div>

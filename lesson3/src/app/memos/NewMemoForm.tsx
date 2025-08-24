@@ -36,15 +36,15 @@ export default function NewMemoForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 p-4 border rounded bg-white">
-      <h2 className="font-semibold">新規作成</h2>
+    <form onSubmit={onSubmit} className="space-y-4 p-4 rounded bg-yellow-100">
+      <h2 className="font-semibold text-yellow-900">新規作成</h2>
       <div className="space-y-2">
         <label className="block text-sm">タイトル</label>
         <input
           name="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full border rounded px-3 py-2"
+          className="w-full p-2 border rounded"
           placeholder="タイトル"
           required
         />
@@ -55,16 +55,12 @@ export default function NewMemoForm() {
           name="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="w-full border rounded px-3 py-2 h-28"
+          className="w-full h-28 p-2 border"
           placeholder="詳細"
         />
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <button
-        type="submit"
-        disabled={loading}
-        className="inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 disabled:opacity-50 px-4 py-2 rounded"
-      >
+      <button type="submit" disabled={loading} className="inline-flex bg-yellow-500 px-4 py-2 rounded">
         {loading ? '送信中...' : '送信'}
       </button>
     </form>

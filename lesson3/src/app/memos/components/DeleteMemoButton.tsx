@@ -31,11 +31,7 @@ export default function DeleteMemoButton({ id }: { id: string }) {
   return (
     <div className="inline-block mr-3">
       {error && <p className="text-sm text-red-600 mb-2">{error}</p>}
-      <button
-        onClick={onClick}
-        disabled={loading}
-        className="inline-flex items-center text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 px-4 py-2 rounded"
-      >
+      <button onClick={onClick} disabled={loading} className="inline-flex bg-yellow-500 px-4 py-2 rounded">
         {loading ? '削除中...' : '削除'}
       </button>
     </div>
