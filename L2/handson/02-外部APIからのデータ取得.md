@@ -76,7 +76,6 @@ export interface User {
 - 見出し: ページ先頭に「ユーザ一覧」大きめ見出し（下余白32px）
 - グリッド: 1列→（768px以上）2列→（1024px以上）3列 / カード間余白24px
 - カード: 白背景 / 角丸8px / 内側余白24px / 初期影→ホバーで強い影に200ms遷移
-- アバター: 64px円形ラッパ内に画像（`https://robohash.org/{id}`）`object-cover`
 - テキスト: ID小さく淡色 / ユーザー名やや大きく太字 / 会社名は本文より淡色
 - リンク: カード末尾に詳細ページボタン（青→ホバー濃い青）
 - 型: `User` の `id` `username` `company.name` を利用
@@ -86,9 +85,7 @@ export interface User {
    - `<h1>` 見出し（ページタイトル）
    - `<ul>` 一覧
      - `<li>` カード（繰り返し）
-       - `<div>` ヘッダー行（アバター+テキスト）
-         - `<div>` アバターラッパ
-           - `<Image>` アバター画像
+       - `<div>` ヘッダー行（テキスト）
          - `<div>` テキストブロック
            - `<p>` ID行
            - `<h3>` ユーザ名
@@ -99,7 +96,6 @@ export interface User {
 
 ### ヒント
 - Tailwindの例：`grid` `gap-6` `md:grid-cols-2` `lg:grid-cols-3` `rounded-lg` `shadow-md` `hover:shadow-lg` `transition-shadow`
-- 画像最適化: `next/image` + `sizes="64px"`
 - レイアウト段階指定: モバイル→中→大の順でクラス追加
 - エラー: `if (!response.ok) throw new Error(...)`
 
@@ -107,7 +103,6 @@ export interface User {
 
 ```tsx
 // src/app/users/page.tsx
-import Image from 'next/image';
 import Link from 'next/link';
 import { User } from '@/types/user';
 
@@ -131,20 +126,9 @@ export default async function UsersPage() {
             key={user.id}
             className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
           >
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="relative w-16 h-16 rounded-full overflow-hidden">
-                <Image
-                  src={`https://robohash.org/${user.id}`}
-                  alt={`${user.username}のアバター`}
-                  fill
-                  className="object-cover"
-                  sizes="64px"
-                />
-              </div>
-              <div>
-                <p className="text-sm text-gray-500">ID: {user.id}</p>
-                <h3 className="font-semibold text-lg text-gray-800">{user.username}</h3>
-              </div>
+            <div className="mb-4">
+              <p className="text-sm text-gray-500">ID: {user.id}</p>
+              <h3 className="font-semibold text-lg text-gray-800">{user.username}</h3>
             </div>
             <div className="mb-4">
               <p className="text-gray-600 mb-2">
@@ -175,7 +159,7 @@ export default async function UsersPage() {
 - `src/types/user.ts` に `User` 型が定義され全フィールド保持。
 - `/users` で10件のカードが表示。
 - 列数が幅に応じ1→2→3に変化。
-- 各カードにアバター画像/ID/ユーザ名/会社名/「詳細を見る」ボタン。
+- 各カードにID/ユーザ名/会社名/「詳細を見る」ボタン。
 - ホバーで影が強調される。
 - ネットワークタブの `users` 取得が1回。
 - コンソールエラーなし。
