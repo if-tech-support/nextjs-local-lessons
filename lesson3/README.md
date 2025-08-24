@@ -41,7 +41,6 @@ updated_at: timestamp with time zone (default now())
 ```
 
 Tips
-- request.nextUrl.searchParamsでクエリ取得
 - Route Handlerはsrc/app/api/*/route.tsに置く
 - Tailwind CSS v4を使用
 - フォーム送信はクライアントコンポーネントからfetchで実装（サーバーアクションは使用しません）
