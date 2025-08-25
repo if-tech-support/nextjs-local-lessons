@@ -1,36 +1,46 @@
-# contents.md生成用プロンプト（テンプレート）
+# contents.md生成用プロンプト（パラメーター不要・自己抽出モード）
 
-あなたは教材コンテンツ編集者です。以下のパラメーターを基に、レッスンの「contents.md」を日本語で作成してください。出力はMarkdownのみで、指定の見出し構成とスタイルに厳密にしたがってください。
+あなたは教材コンテンツ編集者です。レッスンフォルダー内の実ファイルから必要情報を自動抽出し、レッスンの「contents.md」を日本語で作成してください。出力はMarkdownのみで、指定の見出し構成とスタイルに厳密にしたがってください。
 
-［パラメーター］
-- lesson_title: {{lesson_title}}
-- overview: {{1〜2文でのレッスン概要}}
-- stack: {{使用技術（例: Next.js/React/Tailwind CSS/Node.js/DBなど）}}
-- target_audience: {{対象者（箇条書き）}}
-- goals: {{目的（3〜6項目の箇条書き）}}
-- skills: {{学習対象スキル（箇条書き）}}
-- prerequisites: {{前提（推奨）（箇条書き）}}
-- pages_or_routes: {{ページやルートの例（必要なら）}}
-- special_rules: {{実装上のルール（例: サーバーアクションを使わない/クラスは最大N個など）任意}}
-- db_section_enabled: {{true|false}}
-- db_vendor: {{DBベンダー名（例: Supabase）}}（db_section_enabled=trueのときのみ使用）
-- db_project_naming_guidelines: {{DBプロジェクト命名の方針（箇条書き・例示つき）任意}}
-- env_vars: {{環境変数キーと例（箇条書き）任意}}
-- chapters: {{章立て（配列）。各要素にno, filename, synopsisを持つ}}
-   - 例（下記はフォーマット例。必要に応じて置き換えてください）:
+［対象レッスンの特定ルール］
+- このプロンプトを実行する直前に編集中/アクティブなレッスンフォルダー（例: `lesson1`/`lesson2`/`lesson3`）を対象とする。
+- もし複数候補がある場合は、ユーザーの編集中ディレクトリにもっとも近い`lessonN`を対象とする。
 
-```yaml
-- no: "01"
-   filename: "01-環境構築.md"
-   synopsis: "依存導入と開発起動確認"
-- no: "02"
-   filename: "02-◯◯.md"
-   synopsis: "◯◯の実装"
-# …
-- no: "06"
-   filename: "06-まとめ.md"
-   synopsis: "学んだポイントのふりかえりと自己チェック"
-```
+［入力ソース（自動抽出）］
+- 必須: `<lesson>/handson/design.md`
+- 任意: `<lesson>/handson/*.md`（各章）、`<lesson>/README.md`、`<lesson>/src/**`、`<lesson>/package.json`、`<lesson>/next.config.*`、`<lesson>/postcss.config.*`
+
+［抽出手順］
+1) lesson_title
+   - 基本は`<lesson>/README.md`の先頭見出しや概要から抽出。
+   - なければ`design.md`のタイトルや要約から簡潔に命名（例: "Lesson N: <要約キーワード>"）。
+2) overview
+   - `design.md`の冒頭要約/ゴール説明から1〜2文で要約。
+3) stack
+   - `package.json`の依存、`next.config.*`、`postcss.config.*`、`src/**`の使用から推定（例: Next.js/React/Tailwind CSS/Supabase）。
+4) target_audience
+   - `design.md`の対象者や前提から抽出。なければ想定を2〜4行で補完（初中級者向けなど）。
+5) goals
+   - `design.md`の目的・学習ゴールから3〜6項目を抽出。
+6) skills
+   - 実装で触れるAPI/概念を`design.md`と`src/**`から抽出（例: Route Handler/NextRequest/NextResponse/DBクライアント）。
+7) prerequisites
+   - `design.md`やREADMEから環境条件を抽出（Node.js LTS等）。
+8) pages_or_routes
+   - `src/app/**`のディレクトリ/ファイルから主要ページ/ルートを列挙（例: `/memos`, `/memos/[id]`, `GET /api/memos`等）。
+9) special_rules
+   - `design.md`やREADMEにある実装ルール（例: サーバーアクション不使用/クラスは最大N個）を列挙。
+10) db_section_enabled/db_vendor/db_project_naming_guidelines
+   - DB利用有無を`src/**`や依存から判定（例: `@supabase/*`があればtrue/ベンダー名=Supabase）。
+   - 命名方針は`design.md`のガイドがあれば抽出、なければ最小限を補完。
+11) env_vars
+   - `.env`例やREADME/コード中の参照（`process.env.*`や`NEXT_PUBLIC_*`）から列挙。
+12) chapters
+   - `<lesson>/handson`配下の`NN-*.md`を番号順に走査し、`no`/`filename`/`synopsis`を作成。
+   - synopsisは各章の冒頭「はじめに」「目的」から1行で要約。ない場合はファイル名から自然に補完。
+
+［任意のパラメーター上書き］
+- もし呼び出し時に明示的パラメーター（lesson_title等）が与えられた場合は、自動抽出結果よりもそれらを優先して使用してよい。
 
 ［出力要件］
 - ドキュメントはMarkdown。先頭から次の見出し順で構成すること。
@@ -73,21 +83,10 @@
 - 出力前後の私的コメントや断り書きは不要。指定の構成のみを出力。
 - 架空のコマンド実行例は記載しない（必要時は名称のみに留める）。
 
-［サンプル埋め方の例（このブロックは出力しない）］
-- lesson_title: Next.jsで学ぶルートハンドラー入門
-- overview: 2ページ構成のメモアプリを題材に、CRUD APIと最小DB永続化を学ぶ。
-- stack: Next.js/React/Tailwind CSS/Supabase
-- target_audience: React/Next.jsの基礎を知っている初中級者
-- goals: CRUD実装/クエリ取得/DB連携/クライアントfetchなど
-- skills: Route Handler/NextRequest/NextResponse/DBクライアント/UI実装
-- prerequisites: Node.js LTS/パッケージマネージャー/Next.js 15系など
-- db_section_enabled: true
-- db_vendor: Supabase
-- db_project_naming_guidelines:
-  - 命名は環境と用途がわかる形（例: `{{lesson_family}}-<yourname>-dev`）
-  - レッスン間で継続利用する前提で名付ける
-  - リージョンは利用地域に合わせる
-- env_vars: NEXT_PUBLIC_BASE_URL/DB_URL/DB_ANON_KEYなど
-- chapters: 01〜06（06はまとめ）
+［注意事項（自己抽出モード特有）］
+- 参照できる実ファイルのみから抽出し、推測は最小限に留める。推測した場合は自然な日本語に整形する。
+- 章ファイルが存在しない番号は飛ばさず、存在する`NN-*.md`のみを列挙する。
+- 章数は固定しない。
+- 出力前後に私的コメントを付与しない。指定の構成のみを出力。
 
-この条件で、{{lesson_title}}のcontents.mdを生成してください。
+この条件で、対象レッスンのcontents.mdを生成してください。
