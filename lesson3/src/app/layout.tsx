@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" className={geistSans.variable}>
-      <body className="min-h-screen bg-yellow-50 flex flex-col">
+      <body className="min-h-screen bg-sky-50 flex flex-col">
         <Header />
         <main className="mx-auto max-w-3xl p-6 flex-1">{children}</main>
         <Footer />

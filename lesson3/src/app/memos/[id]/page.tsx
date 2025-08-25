@@ -2,8 +2,8 @@ import BackButton from './BackButton';
 import { Memo } from '@/types/memo';
 import { apiUrl } from '@/lib/api';
 import { notFound } from 'next/navigation';
-import EditMemoForm from '../components/EditMemoForm';
-import DeleteMemoButton from '../components/DeleteMemoButton';
+import EditMemoForm from './EditMemoForm';
+import DeleteMemoButton from './DeleteMemoButton';
 
 async function fetchMemo(id: string): Promise<Memo | null> {
   const res = await fetch(apiUrl(`/api/memos/${id}`), {
@@ -20,12 +20,12 @@ export default async function MemoDetail({ params }: { params: Promise<{ id: str
   if (!memo) return notFound();
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-yellow-900">メモ詳細</h1>
+      <h1 className="text-2xl font-bold text-sky-900">メモ詳細</h1>
 
-      <div className="p-4 bg-yellow-100 rounded">
-        <h2 className="text-xl font-semibold text-yellow-900">{memo.title}</h2>
+      <div className="p-4 bg-white rounded">
+        <h2 className="text-xl font-semibold text-sky-900">{memo.title}</h2>
         <p className="mt-2 whitespace-pre-wrap">{memo.content}</p>
-        <p className="mt-3 text-sm text-yellow-800">
+        <p className="mt-3 text-sm text-sky-800">
           作成: {new Date(memo.created_at).toLocaleString()} / 更新: {new Date(memo.updated_at).toLocaleString()}
         </p>
       </div>

@@ -36,8 +36,8 @@ export default function NewMemoForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 p-4 rounded bg-yellow-100">
-      <h2 className="font-semibold text-yellow-900">新規作成</h2>
+    <form onSubmit={onSubmit} className="space-y-4 p-4 rounded bg-white">
+      <h2 className="font-semibold text-sky-900">新規作成</h2>
       <div className="space-y-2">
         <label className="block text-sm">タイトル</label>
         <input
@@ -60,7 +60,11 @@ export default function NewMemoForm() {
         />
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
-      <button type="submit" disabled={loading} className="inline-flex bg-yellow-500 px-4 py-2 rounded">
+      <button
+        type="submit"
+        disabled={loading}
+        className="inline-flex bg-sky-500 px-4 py-2 rounded text-white hover:cursor-pointer"
+      >
         {loading ? '送信中...' : '送信'}
       </button>
     </form>
