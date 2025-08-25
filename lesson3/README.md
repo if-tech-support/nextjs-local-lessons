@@ -22,7 +22,7 @@ npm i
 npm run dev
 ```
 
-1) ブラウザで http://localhost:3000 へ。ヘッダーの MemoLite から /memos を開く。
+2) ブラウザで http://localhost:3000 へ。ヘッダーの`MemoLite`から`/memos`を開く。
 
 環境変数（.env）
 - このレッスンではAPIはSupabaseのみを使用します（インメモリなし、サーバーアクション不使用）
