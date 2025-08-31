@@ -47,48 +47,39 @@ const NEWS_CONTENTS = [
 export default function Top() {
   return (
     <>
-      <div className="h-[400px] bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-center mb-[100px]"></div>
-      <div className="mx-auto my-4 max-w-[960px] px-4 max-[768px]:px-2">
-        <div className="flex flex-col gap-4 mx-auto mb-[100px]">
-          <h2 className="text-[24px] font-bold text-[#1d5396] mb-4 border-b border-[#1d5396] inline-block mx-auto">
-            MISSION
-          </h2>
-          <div className="flex flex-row justify-between gap-4 w-full max-[768px]:flex-col-reverse">
-            <div className="w-[48%] max-[768px]:w-full">
-              <p className="text-[20px] font-bold mb-4">「デジタルイノベーションを通じて、未来のビジネスを創造する」</p>
+      <div className="h-[300px] bg-center bg-cover rounded bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1770&auto=format&fit=crop')]" />
+      <div className="mx-auto my-4 max-w-[960px] px-4">
+        <div className="flex flex-col gap-4 mx-auto mb-16">
+          <h2 className="text-xl font-bold text-blue-700 border-b">MISSION</h2>
+          <div className="flex gap-4 w-full">
+            <div className="w-1/2">
+              <p className="text-lg font-bold mb-4">「デジタルイノベーションを通じて、未来のビジネスを創造する」</p>
               <p>
                 Web World
                 Creators株式会社は、最先端のウェブ技術と創造的なデザインを融合させ、クライアントのビジネスが直面する課題を解決します。私たちは、持続可能で効果的なデジタルソリューションを提供することにより、クライアントのビジネス成長を加速させることを使命としています。
               </p>
             </div>
-            <div className="w-[48%] max-[768px]:w-full max-[768px]:h-[300px] bg-[url('https://cdn.pixabay.com/photo/2015/01/09/11/09/meeting-594091_1280.jpg')] bg-cover max-[768px]:mb-4"></div>
+            <div className="w-1/2 bg-center bg-cover rounded bg-[url('https://cdn.pixabay.com/photo/2015/01/09/11/09/meeting-594091_1280.jpg')]" />
           </div>
         </div>
-        <div className="flex flex-col gap-4 mx-auto mb-[100px]">
-          <h2 className="text-[24px] font-bold text-[#1d5396] mb-4 border-b border-[#1d5396] inline-block mx-auto">
-            SERVICE
-          </h2>
-          <div className="flex flex-wrap justify-between max-[768px]:justify-center gap-8 w-full">
+        <div className="flex flex-col gap-4 mx-auto mb-16">
+          <h2 className="text-xl font-bold text-blue-700 border-b">SERVICE</h2>
+          <div className="flex flex-wrap gap-6 w-full">
             {SERVICE_SECTION_CONTENTS.map((content) => (
-              <div
-                key={content.id}
-                className="flex flex-col gap-4 w-[46%] max-[768px]:w-full h-auto p-4 bg-[aliceblue] rounded-lg"
-              >
-                <p className="text-[18px] font-bold text-center">{content.title}</p>
+              <div key={content.id} className="w-[46%] p-4 bg-blue-50 rounded shadow">
+                <p className="text-base font-bold text-center">{content.title}</p>
                 <p>{content.description}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex flex-col gap-4 mx-auto mb-[100px]">
-          <h2 className="text-[24px] font-bold text-[#1d5396] mb-4 border-b border-[#1d5396] inline-block mx-auto">
-            NEWS
-          </h2>
+        <div className="flex flex-col gap-4 mx-auto mb-16">
+          <h2 className="text-xl font-bold text-blue-700 border-b">NEWS</h2>
           <div>
             {NEWS_CONTENTS.map((news) => (
-              <div key={news.id} className="flex justify-between py-5 border-b border-[#e6e6fa]">
+              <div key={news.id} className="flex justify-between py-5 border-b border-blue-100">
                 <p>{news.date}</p>
-                <p className="w-[60%]">{news.description}</p>
+                <p className="w-3/5">{news.description}</p>
               </div>
             ))}
           </div>

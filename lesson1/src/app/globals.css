@@ -19,23 +19,12 @@
   }
 }
 
-html,
-body {
-  display: flex;
-  flex-direction: column;
-  max-width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
-  color: #333;
-  background-color: #fff;
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
-
-.main {
-  flex: 1;
-}
-

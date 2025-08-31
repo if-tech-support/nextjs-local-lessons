@@ -72,15 +72,15 @@ const SERVICE_DETAILS_LIST = [
 
 export default function Service() {
   return (
-    <div className="mx-auto max-w-[960px] px-4 max-[768px]:px-2">
-      <h2 className="text-[32px] font-bold text-[#1d5396] px-4 py-8">SERVICE</h2>
-      <div className="flex flex-col items-center justify-center w-full px-4 py-8 rounded-lg">
+    <div className="mx-auto max-w-[960px] px-4">
+      <h2 className="text-2xl font-bold text-blue-700 py-8">SERVICE</h2>
+      <div className="flex flex-col w-full py-4">
         {SERVICE_DETAILS_LIST.map((serviceDetails) => (
-          <div key={serviceDetails.id} className="flex flex-col gap-5 w-full py-5 border-b border-[#e6e6fa]">
-            <h3 className="text-[20px]">{serviceDetails.title}</h3>
+          <div key={serviceDetails.id} className="space-y-4 py-4 border-b border-blue-100">
+            <h3 className="text-lg">{serviceDetails.title}</h3>
             {serviceDetails.details.map((detail) => (
-              <div key={detail.title} className="bg-white rounded-[10px] p-4">
-                <p className="text-[18px] font-bold mb-2">{detail.title}</p>
+              <div key={detail.title} className="bg-blue-50 rounded p-4 shadow">
+                <p className="text-base font-bold mb-2">{detail.title}</p>
                 <p>{detail.description}</p>
               </div>
             ))}
