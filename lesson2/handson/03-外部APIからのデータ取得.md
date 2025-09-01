@@ -44,7 +44,10 @@ export interface User {
     suite: string;
     city: string;
     zipcode: string;
-    geo: { lat: string; lng: string };
+    geo: {
+      lat: string;
+      lng: string;
+    };
   };
   phone: string;
   website: string;
@@ -62,23 +65,25 @@ export interface User {
 
 ---
 
-## 課題B：ユーザー一覧ページ（15分）
+## 課題B：ユーザー一覧ページ（25分）
 
-15分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
+25分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
 ### 仕様
 外部APIから取得した10件のユーザーをグリッドでカード表示します。
 
 - 編集/対象ファイル: `src/app/users/page.tsx`
-- コンポーネント: `export default async function UsersPage()`（サーバーコンポーネント）
-- データ取得: `fetch('https://jsonplaceholder.typicode.com/users')` 失敗時は例外
-- 分割: `getUsers()` 関数に切り出し
-- 見出し: ページ先頭に「ユーザ一覧」大きめ見出し（下余白32px）
-- グリッド: 1列→（768px以上）2列→（1024px以上）3列 / カード間余白24px
-- カード: 白背景 / 角丸8px / 内側余白24px / 初期影→ホバーで強い影に200ms遷移
-- テキスト: ID小さく淡色 / ユーザー名やや大きく太字 / 会社名は本文より淡色
-- リンク: カード末尾に詳細ページボタン（青→ホバー濃い青）
-- 型: `User` の `id` `username` `company.name` を利用
+- データ取得処理
+  - 定義: データ取得処理は`getUsers()` 関数に切り出し
+  - データ取得: `fetch('https://jsonplaceholder.typicode.com/users')`で取得し、失敗時は例外を投げる
+- ページ表示
+  - コンポーネント: `export default async function UsersPage()`（サーバーコンポーネント）
+  - 見出し: ページ先頭に「ユーザ一覧」大きめ見出し（下余白32px）
+  - グリッド: 1列→（768px以上）2列→（1024px以上）3列 / カード間余白24px
+  - カード: 白背景 / 角丸8px / 内側余白24px / 初期影→ホバーで強い影に200ms遷移
+  - テキスト: ID小さく淡色 / ユーザー名やや大きく太字 / 会社名は本文より淡色
+  - リンク: カード末尾に詳細ページボタン（青→ホバー濃い青）
+  - ユーザー情報表示: ユーザー情報の `id` `username` `company.name` を利用
 
 【使用タグ】
  - `<div>` ルートラッパ

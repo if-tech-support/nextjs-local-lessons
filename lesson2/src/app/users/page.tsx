@@ -1,13 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
-import { User } from "@/types/user";
+import Image from 'next/image';
+import Link from 'next/link';
+import { User } from '@/types/user';
 
 // ユーザデータを取得する関数
 async function getUsers(): Promise<User[]> {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await fetch('https://jsonplaceholder.typicode.com/users');
 
   if (!response.ok) {
-    throw new Error("Failed to fetch users");
+    throw new Error('Failed to fetch users');
   }
 
   return response.json();
@@ -22,10 +22,7 @@ export default async function UsersPage() {
 
       <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {users.map((user) => (
-          <li
-            key={user.id}
-            className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
-          >
+          <li key={user.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             <div className="flex items-center space-x-4 mb-4">
               <div className="relative w-16 h-16 rounded-full overflow-hidden">
                 <Image
@@ -38,9 +35,7 @@ export default async function UsersPage() {
               </div>
               <div>
                 <p className="text-sm text-gray-500">ID: {user.id}</p>
-                <h3 className="font-semibold text-lg text-gray-800">
-                  {user.username}
-                </h3>
+                <h3 className="font-semibold text-lg text-gray-800">{user.username}</h3>
               </div>
             </div>
 

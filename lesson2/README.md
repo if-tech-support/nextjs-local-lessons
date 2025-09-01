@@ -34,20 +34,22 @@
   - ページタイトル（ユーザ一覧）
   - ユーザリスト（ul）
     - 各ユーザ項目（li）
-      - アバター画像（next/image, 128x128, `https://robohash.org/{id}`）
-      - id
-      - username
-      - company.name
-      - 詳細ページへのリンク（`/users/{id}`）
+  - アバター画像（next/image, 64x64, `https://robohash.org/{id}`）
+  - id
+  - username
+  - company.name
+  - 詳細ページへのリンク（`/users/{id}`）
 
 - **`/users/[id]` ページ**
   - ページタイトル（ユーザ詳細）
   - ユーザ詳細カード
     - アバター画像（next/image, 128x128）
     - username
+  - name（本名）
     - email
     - company.name
     - website
+  - address（street/suite, city/zipcode）
   - 戻るボタン（useRouter().back()）
 
 ## 技術スタック
@@ -73,7 +75,7 @@ npm run dev
 - キャッシュ設定
 
 ### 2. Dynamic Routes
-- `[id]` フォルダ構造
+- `[id]` フォルダー構造
 - `params` プロパティの活用
 - 存在しないユーザの処理（notFound()）
 

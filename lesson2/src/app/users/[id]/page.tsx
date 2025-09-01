@@ -1,30 +1,29 @@
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import { User } from "@/types/user";
-import BackButton from "./BackButton";
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { User } from '@/types/user';
+import BackButton from './BackButton';
 
 // 特定のユーザデータを取得する関数
 async function getUser(id: string): Promise<User> {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`
-  );
+  const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch user");
+    throw new Error('Failed to fetch user');
   }
 
   return response.json();
 }
 
 interface UserDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function UserDetailPage({ params }: UserDetailPageProps) {
   try {
-    const user = await getUser(params.id);
+    const { id } = await params;
+    const user = await getUser(id);
 
     return (
       <div>
@@ -46,9 +45,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
               />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                {user.username}
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">{user.username}</h2>
               <p className="text-gray-600">{user.name}</p>
             </div>
           </div>
@@ -63,7 +60,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
                 <span className="font-medium">電話:</span> {user.phone}
               </p>
               <p className="text-gray-600">
-                <span className="font-medium">ウェブサイト:</span>{" "}
+                <span className="font-medium">ウェブサイト:</span>{' '}
                 <a
                   href={user.website}
                   target="_blank"
@@ -81,8 +78,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
                 <span className="font-medium">会社名:</span> {user.company.name}
               </p>
               <p className="text-gray-600">
-                <span className="font-medium">キャッチフレーズ:</span>{" "}
-                {user.company.catchPhrase}
+                <span className="font-medium">キャッチフレーズ:</span> {user.company.catchPhrase}
               </p>
             </div>
 
