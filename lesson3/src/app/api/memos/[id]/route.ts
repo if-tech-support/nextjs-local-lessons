@@ -1,10 +1,10 @@
+import { createClient } from '@/utils/server';
 import { NextResponse } from 'next/server';
-import { createSupabaseClient } from '@/server/supabase';
 
 export async function GET(req: Request) {
   const pathname = new URL(req.url).pathname;
   const id = decodeURIComponent(pathname.split('/').pop() || '');
-  const client = createSupabaseClient();
+  const client = await createClient();
   if (!client) return NextResponse.json({ error: 'Supabase client is not configured' }, { status: 500 });
   const { data, error } = await client
     .from('memos')
@@ -20,7 +20,7 @@ export async function PUT(req: Request) {
   const pathname = new URL(req.url).pathname;
   const id = decodeURIComponent(pathname.split('/').pop() || '');
   const body = await req.json();
-  const client = createSupabaseClient();
+  const client = await createClient();
   if (!client) return NextResponse.json({ error: 'Supabase client is not configured' }, { status: 500 });
   const { data, error } = await client
     .from('memos')
@@ -35,7 +35,7 @@ export async function PUT(req: Request) {
 export async function DELETE(req: Request) {
   const pathname = new URL(req.url).pathname;
   const id = decodeURIComponent(pathname.split('/').pop() || '');
-  const client = createSupabaseClient();
+  const client = await createClient();
   if (!client) return NextResponse.json({ error: 'Supabase client is not configured' }, { status: 500 });
   const { error } = await client.from('memos').delete().eq('id', id);
   if (error) return NextResponse.json({ error: String(error.message ?? error) }, { status: 500 });

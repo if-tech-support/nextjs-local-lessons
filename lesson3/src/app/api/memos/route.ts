@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createSupabaseClient } from '@/server/supabase';
+import { createClient } from '@/utils/server';
 
 export async function GET() {
-  const client = createSupabaseClient();
+  const client = await createClient();
   if (!client) return NextResponse.json({ error: 'Supabase client is not configured' }, { status: 500 });
   const { data, error } = await client
     .from('memos')
@@ -14,7 +14,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const client = createSupabaseClient();
+  const client = await createClient();
   if (!client) return NextResponse.json({ error: 'Supabase client is not configured' }, { status: 500 });
   const { data, error } = await client
     .from('memos')
