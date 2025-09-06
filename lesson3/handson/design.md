@@ -19,8 +19,8 @@
   - `/memos/[id]` メモ詳細（編集・削除）
 - APIルート（章分割に合わせた学習順）
   - 03章: `GET /api/memos` 一覧取得、`POST /api/memos` 新規作成
-  - 05章: `GET /api/memos/[id]` 1件取得
-  - 06章: `PUT /api/memos/[id]` 更新、`DELETE /api/memos/[id]` 削除
+  - 07章: `GET /api/memos/[id]` 1件取得
+  - 08章: `PUT /api/memos/[id]` 更新、`DELETE /api/memos/[id]` 削除
 
 # レイアウト
 - 共通
