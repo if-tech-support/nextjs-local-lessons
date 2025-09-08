@@ -24,7 +24,7 @@ create table orders (
   created_at timestamptz default now()
 );
 
-create table if not exists order_items (
+create table order_items (
   id uuid primary key default gen_random_uuid(),
   order_id uuid references orders(id) on delete cascade,
   product_id uuid references products(id) on delete restrict,
