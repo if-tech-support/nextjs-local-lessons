@@ -1,10 +1,16 @@
 'use client';
 import { useMemo, useState } from 'react';
-import type { Product } from '@/lib/store';
 import { addToCartAction } from '@/lib/actions';
 import { SearchBox } from './SearchBox';
 
-export default function ClientProductList({ products }: { products: Product[] }) {
+interface DBProduct {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
+export default function ClientProductList({ products }: { products: DBProduct[] }) {
   const [q, setQ] = useState('');
   const list = useMemo(
     () => products.filter((p) => (p.name + p.description).toLowerCase().includes(q.toLowerCase())),

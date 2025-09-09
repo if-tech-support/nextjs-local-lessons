@@ -55,6 +55,9 @@ function Header() {
         <Link href="/orders" className="hover:underline">
           注文
         </Link>
+        <Link href="/cart" className="hover:underline">
+          カート
+        </Link>
       </nav>
     </header>
   );
