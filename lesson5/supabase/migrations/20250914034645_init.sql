@@ -12,7 +12,7 @@ create table cart_items (
   id uuid primary key default gen_random_uuid(),
   temp_user_id text not null,
   product_id uuid references products(id) on delete cascade,
-  qty integer not null default 1,
+  quantity integer not null default 1,
   created_at timestamptz default now(),
   unique (temp_user_id, product_id)
 );
@@ -28,7 +28,7 @@ create table order_items (
   id uuid primary key default gen_random_uuid(),
   order_id uuid references orders(id) on delete cascade,
   product_id uuid references products(id) on delete restrict,
-  qty integer not null,
+  quantity integer not null,
   price_at_order integer not null,
   created_at timestamptz default now()
 );

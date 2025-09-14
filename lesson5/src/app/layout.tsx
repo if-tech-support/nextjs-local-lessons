@@ -26,16 +26,23 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen flex flex-col">
-          <div className="flex-1">
-            <div className="max-w-3xl mx-auto p-4 space-y-6">
+        <div className="min-h-screen flex flex-col bg-white">
+          {/* Header */}
+          <header className="border-b border-pink-200">
+            <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
               <Header />
-              <main className="space-y-6">{children}</main>
             </div>
-          </div>
-          <div className="max-w-3xl mx-auto p-4">
-            <Footer />
-          </div>
+          </header>
+          {/* Main */}
+          <main className="flex-1">
+            <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">{children}</div>
+          </main>
+          {/* Footer */}
+          <footer className="border-t border-pink-200 mt-8">
+            <div className="max-w-3xl mx-auto px-4 py-4">
+              <Footer />
+            </div>
+          </footer>
         </div>
       </body>
     </html>
@@ -44,25 +51,25 @@ export default function RootLayout({
 
 function Header() {
   return (
-    <header className="flex items-center gap-4">
-      <Link href="/products" className="font-bold text-pink-600">
+    <div className="flex items-center gap-6">
+      <Link href="/products" className="font-semibold text-pink-600">
         MiniShop
       </Link>
       <nav className="flex gap-4 text-sm">
-        <Link href="/products" className="hover:underline">
+        <Link href="/products" className="text-gray-700 hover:text-pink-600">
           商品
         </Link>
-        <Link href="/orders" className="hover:underline">
+        <Link href="/orders" className="text-gray-700 hover:text-pink-600">
           注文
         </Link>
-        <Link href="/cart" className="hover:underline">
+        <Link href="/cart" className="text-gray-700 hover:text-pink-600">
           カート
         </Link>
       </nav>
-    </header>
+    </div>
   );
 }
 
 function Footer() {
-  return <footer className="text-center text-xs text-gray-500 py-4">© 2025 MiniShop</footer>;
+  return <p className="text-center text-xs text-gray-500">© 2025 MiniShop</p>;
 }
