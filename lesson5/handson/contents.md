@@ -62,32 +62,18 @@ DB利用時はローカルSupabase（Postgres）をCLIで起動しマイグレ�
 
 ---
 ## 章立て（目次）
-1. `01-環境構築.md`（環境セットアップ）
-  - 開発環境を用意してNext.jsとSupabaseを動かす土台を作る
-2. `02-共通レイアウトとUI基盤.md`（共通レイアウト）
-  - ヘッダー/フッター/ナビを共通レイアウトに入れて見た目の骨組みを整える
-3. `03-DBスキーマとクライアント準備.md`（データ構造理解）
-  - 商品/カート/注文テーブルの関係を理解しSupabaseクライアントを使える状態にする
-4. `04-API（前編：商品一覧と追加）.md`（一覧取得と追加）
-  - 商品一覧を読み込みカートに追加する最小のサーバー処理を作る
-5. `05-新規追加ボタンの実装.md`（カート追加ボタン）
-  - 商品カード内のボタン1つでカートへ数量1を追加する最小のServer Action送信を学ぶ
-6. `06-送信後の再検証フロー.md`（送信と再検証）
-  - カート追加/数量更新/注文確定後にrevalidatePathで一覧が更新される順序を確認する
-7. `07-各ページの一覧更新確認.md`（再検証結果の見え方）
-  - products/cart/ordersページ別々で操作後にUIがどう差し替わるかを観察する（統合ページなし）
-8. `08-注文履歴の取得と集計.md`（履歴一覧）
-  - ordersページでorder_itemsをネスト取得し各注文合計金額を計算して表示する
-9. `09-API（後編：更新・削除）.md`（更新と削除）
-  - 数量変更や削除などの更新処理と再検証の動きを押さえる
-10. `10-詳細ページ.md`（計画：注文詳細）
-  - （計画）注文ごとの専用詳細ページをどう作るか考える
-11. `11-数量編集UI拡張.md`（計画：編集改善）
-  - （計画）現在の行内数量更新を専用UI/楽観的更新に発展させる案
-12. `12-削除後の遷移改善.md`（計画：削除後UX）
-  - （計画）カート行/注文削除後の遷移先や完了表示を最適化する案
-13. `13-まとめ.md`（まとめと次の一歩）
-  - 学んだサーバーActionと再検証/Suspenseの要点と次の拡張アイデアを整理する
+1. `01-環境構築.md`（環境セットアップ）: 対象ファイル=`package.json` `next.config.ts` `supabase/schema.sql` / 後続章で扱うUI構造・Server Actionsは未導入
+2. `02-共通レイアウトとUI基盤.md`（共通レイアウト）: 対象ファイル=`src/app/layout.tsx` `src/app/page.tsx` / 後続章: 動的データ取得・Server Actions未実装
+3. `03-DBスキーマとクライアント準備.md`（データ構造理解）: 対象ファイル=`supabase/migrations/{YYYYMMDDhhmmss_init}.sql` `supabase/seed.sql` `src/lib/supabase/server.ts` `src/lib/supabase/client.ts` / 後続章: CRUD呼び出し・Action未実装
+4. `04-商品一覧.md`（一覧取得と表示、カート件数の取得と表示）: 対象ファイル=`src/app/products/page.tsx` / 後続章: カート追加ボタン・Server Action・Suspense未実装
+5. `05-カート追加.md`（カート追加機能）: 対象ファイル=`src/app/products/page.tsx` `src/lib/actions.ts`（`addToCartAction`）/後続章: カート一覧表示・数量更新未実装・Server Action・Suspense未実装・ `src/lib/actions.ts`の`addToCartAction`以外のAction未実装
+6. `06-カート一覧.md`（カート取得と表示）: 対象ファイル=`src/app/cart/page.tsx`/後続章: 数量更新・削除Action未実装・Server Action・Suspense未実装
+7. `07-カート更新と削除.md`（カート更新/削除機能）: 対象ファイル=`src/lib/actions.ts`（`updateCartItemAction` `removeCartItemAction`）`src/app/cart/page.tsx`/後続章: 注文確定未実装・Server Action・Suspense未実装・ `src/lib/actions.ts`の`addToCartAction`と`updateCartItemAction`と`removeCartItemAction`以外のAction未実装
+8. `08-注文確定.md`（注文確定機能）: 対象ファイル=`src/lib/actions.ts`（`placeOrderAction`）`src/app/cart/page.tsx` `src/app/orders/page.tsx`/後続章: 注文一覧取得強化・注文削除・遅延読み込み未実装・Server Action・Suspense未実装・ `src/lib/actions.ts`の`addToCartAction`と`updateCartItemAction`と`removeCartItemAction`と`placeOrderAction`以外のAction未実装
+9. `09-注文一覧.md`（注文一覧取得と表示）: 対象ファイル=`src/app/orders/page.tsx`/後続章: 注文削除Action・遅延読み込み未実装・Server Action・Suspense未実装
+10. `10-注文削除.md`（注文削除機能）: 対象ファイル=`src/lib/actions.ts`（`deleteOrderAction`）`src/app/orders/page.tsx`/後続章: Suspense/`loading.tsx`適用未実装
+11. `11-遅延読み込みUI.md`（Suspenseとloading.tsx）: 対象ファイル=`src/app/(各ページ)/loading.tsx`（導入）/後続章: まとめのみ
+12. `12-まとめ.md`（まとめと次の一歩）: 対象ファイル=（新規コード追加なし）/後続章なし（学習到達点整理）
 
 次のルールで各章を参照する。章ファイルは存在する`NN-*.md`のみ対象。
 - ファイル名は変更しない

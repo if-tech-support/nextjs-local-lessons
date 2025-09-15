@@ -27,22 +27,11 @@ export default function RootLayout({
     <html lang="ja">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="min-h-screen flex flex-col bg-white">
-          {/* Header */}
-          <header className="border-b border-pink-200">
-            <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
-              <Header />
-            </div>
-          </header>
-          {/* Main */}
+          <Header />
           <main className="flex-1">
             <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">{children}</div>
           </main>
-          {/* Footer */}
-          <footer className="border-t border-pink-200 mt-8">
-            <div className="max-w-3xl mx-auto px-4 py-4">
-              <Footer />
-            </div>
-          </footer>
+          <Footer />
         </div>
       </body>
     </html>
@@ -51,25 +40,35 @@ export default function RootLayout({
 
 function Header() {
   return (
-    <div className="flex items-center gap-6">
-      <Link href="/products" className="font-semibold text-pink-600">
-        MiniShop
-      </Link>
-      <nav className="flex gap-4 text-sm">
-        <Link href="/products" className="text-gray-700 hover:text-pink-600">
-          商品
-        </Link>
-        <Link href="/orders" className="text-gray-700 hover:text-pink-600">
-          注文
-        </Link>
-        <Link href="/cart" className="text-gray-700 hover:text-pink-600">
-          カート
-        </Link>
-      </nav>
-    </div>
+    <header className="border-b border-pink-200">
+      <div className="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <Link href="/products" className="font-semibold text-pink-600">
+            MiniShop
+          </Link>
+          <nav className="flex gap-4 text-sm">
+            <Link href="/products" className="text-gray-700 hover:text-pink-600">
+              商品
+            </Link>
+            <Link href="/orders" className="text-gray-700 hover:text-pink-600">
+              注文
+            </Link>
+            <Link href="/cart" className="text-gray-700 hover:text-pink-600">
+              カート
+            </Link>
+          </nav>
+        </div>
+      </div>
+    </header>
   );
 }
 
 function Footer() {
-  return <p className="text-center text-xs text-gray-500">© 2025 MiniShop</p>;
+  return (
+    <footer className="border-t border-pink-200 mt-8">
+      <div className="max-w-3xl mx-auto px-4 py-4">
+        <p className="text-center text-xs text-gray-500">© 2025 MiniShop</p>
+      </div>
+    </footer>
+  );
 }
