@@ -4,6 +4,15 @@
 以下「評価基準」に従い提出章Markdownをチェックし、所定フォーマットで出力してください。
 題材とするアプリケーションの変更は禁止です。
 
+【ソースオブトゥルース優先順位（新規追加・最優先適用）】
+1. 元のアプリ実装（`src/` `supabase/`）現行コード/スキーマを最上位の正とする。
+2. 次点: 同レッスン `handson/contents.md` の章立て/目的/スキル/タイトル。コードと矛盾時はコード採用し `contents.md` 遅延。
+3. 章Markdownは1/2の派生物。乖離時は章Markdownのみ修正指示。コード/`contents.md` 変更指示は禁止。
+4. レビュー差分判定手順: Strict Parity差分抽出 → `contents.md` との目的/スキル/タイトル差分抽出 → 優先順位適用 → すべて教材Markdown修正指示へ落とし込む。
+5. 先行機能（将来章対象）がコードに存在する場合も削除指示禁止。教材は段階説明で整合し先行部分は未導入表現を避け静的に保持。
+6. SPEC_MISMATCHは常に「教材Markdownが実コード/`contents.md`（コード準拠）に未追随」であり、解消手段は教材Markdown修正のみ。
+7. `contents.md` 側の更新が必要と思われる場合は情報メモのみ（FAIL理由化せず）。
+
 [会話フロー]
 - フェーズ1（パス確認）: 次の一文のみを出力して対象ファイルパスを尋ね、ユーザーの回答を待つ。
    - 出力:「評価対象の章ファイルのパスを教えてください。（例: `lesson1/handson/02-レイアウト作成.md`）」
@@ -225,6 +234,8 @@ if (差分集合からLATER_CHAPTER_ELEMENTとMINOR_CLASS_DIFFとCOMMENT_ONLY_DI
 - テキスト差異（「会社概要」vs「会社紹介」）→ TEXT_DIFF + SPEC_MISMATCH
 - APIハンドラーのメソッド不足 → ROUTE_HANDLER_MISSING + SPEC_MISMATCH
 - データ配列要素数不一致 → ARRAY_LENGTH_DIFF + SPEC_MISMATCH
+
+（優先順位補足）SPEC_MISMATCHは「教材Markdown<実コード」の不整合または`contents.md`再同期遅延による派生差分であり、常に教材Markdownの改訂で解消する。コードや`contents.md`への直接変更指示は出さない。
 
 【追加擬似コード（SPEC_MISMATCH統合）】
 ```
