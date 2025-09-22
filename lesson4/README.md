@@ -87,30 +87,41 @@ npm run dev
 ## ファイル構成
 
 ```
-src/
-├── app/
-│   ├── components/
-│   │   ├── Header.tsx          # ヘッダーコンポーネント
-│   │   └── Footer.tsx          # フッターコンポーネント
-│   ├── dashboard/
-│   │   └── page.tsx            # ダッシュボードページ
-│   ├── login/
-│   │   └── page.tsx            # ログインページ
-│   ├── signup/
-│   │   └── page.tsx            # サインアップページ
-│   ├── layout.tsx              # ルートレイアウト
-│   └── page.tsx                # トップページ
-├── config/
-│   └── error-messages.json     # エラーメッセージ翻訳設定
-├── lib/
-│   ├── actions.ts              # Server Actions
-│   ├── error-messages.ts       # エラーメッセージ管理ユーティリティ
-│   └── supabase/
-│       ├── client.ts           # クライアント用Supabase設定
-│       ├── server.ts           # サーバー用Supabase設定
-│       └── middleware.ts       # middleware用Supabase設定
-└── types/
-    └── auth.ts                 # 認証関連の型定義
+lesson4/
+├── src/
+│   ├── app/
+│   │   ├── components/
+│   │   │   ├── Header.tsx          # ヘッダーコンポーネント
+│   │   │   └── Footer.tsx          # フッターコンポーネント
+│   │   ├── dashboard/
+│   │   │   └── page.tsx            # ダッシュボードページ
+│   │   ├── login/
+│   │   │   └── page.tsx            # ログインページ
+│   │   ├── signup/
+│   │   │   └── page.tsx            # サインアップページ
+│   │   ├── favicon.ico             # ファビコン
+│   │   ├── globals.css             # グローバルスタイル
+│   │   ├── layout.tsx              # ルートレイアウト
+│   │   └── page.tsx                # トップページ
+│   ├── config/
+│   │   └── error-messages.json     # エラーメッセージ翻訳設定
+│   ├── lib/
+│   │   ├── actions.ts              # Server Actions
+│   │   ├── error-messages.ts       # エラーメッセージ管理ユーティリティ
+│   │   └── supabase/
+│   │       ├── client.ts           # クライアント用Supabase設定
+│   │       ├── server.ts           # サーバー用Supabase設定
+│   │       └── middleware.ts       # middleware用Supabase設定
+│   └── types/
+│       └── auth.ts                 # 認証関連の型定義
+├── supabase/
+│   └── schema.sql                  # データベーススキーマ
+├── public/                         # 静的ファイル
+├── middleware.ts                   # Next.js middleware設定
+├── package.json                    # 依存関係設定
+├── next.config.ts                  # Next.js設定
+├── tsconfig.json                   # TypeScript設定
+└── README.md                       # プロジェクト説明
 ```
 
 ## エラーメッセージ設定
