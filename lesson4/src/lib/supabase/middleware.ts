@@ -37,12 +37,33 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // デバッグ用ログ
+  console.log("Middleware - Path:", request.nextUrl.pathname);
+  console.log("Middleware - User:", user ? "Logged in" : "Not logged in");
+
+  // ログイン済みユーザーがログイン・サインアップページにアクセスした場合、ルートにリダイレクト
+  if (
+    user &&
+    (request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/signup"))
+  ) {
+    console.log(
+      "Middleware - Redirecting logged in user from",
+      request.nextUrl.pathname,
+      "to /"
+    );
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  // 未認証ユーザーが保護ページにアクセスした場合、ログインページにリダイレクト
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
+    !request.nextUrl.pathname.startsWith("/signup") &&
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", request.nextUrl.pathname);
