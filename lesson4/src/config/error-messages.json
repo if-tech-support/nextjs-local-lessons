@@ -1,0 +1,18 @@
+{
+  "error_messages": {
+    "Invalid login credentials": "メールアドレスまたはパスワードが正しくありません",
+    "User not found": "ユーザーが見つかりません",
+    "Email not confirmed": "メールアドレスが確認されていません",
+    "Password should be at least": "パスワードは6文字以上で入力してください",
+    "User already registered": "このメールアドレスは既に登録されています",
+    "Invalid email": "有効なメールアドレスを入力してください",
+    "Signup is disabled": "新規登録は現在無効になっています",
+    "Email rate limit exceeded": "メール送信回数が上限に達しました。しばらく待ってから再試行してください",
+    "Password is too weak": "パスワードが弱すぎます。より強いパスワードを設定してください",
+    "Email format is invalid": "メールアドレスの形式が正しくありません",
+    "Password confirmation does not match": "パスワードの確認が一致しません",
+    "Network error": "ネットワークエラーが発生しました。インターネット接続を確認してください",
+    "Server error": "サーバーエラーが発生しました。しばらく待ってから再試行してください",
+    "Service unavailable": "サービスが一時的に利用できません。しばらく待ってから再試行してください"
+  }
+}

@@ -16,9 +16,9 @@ Next.jsのmiddlewareを使用してセッション管理と認証ガードを実
 - 認証ガードとリダイレクト
 - サーバーコンポーネントでの認証確認
 
-## 課題A：middlewareの実装（15分）
+## 課題A：middlewareの実装（12分）
 
-15分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
+12分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
 ### 仕様
 
@@ -27,14 +27,32 @@ Next.jsのmiddlewareを使用してセッション管理と認証ガードを実
 - 作成するファイル: `src/lib/supabase/middleware.ts`
 - セッション更新: Supabaseクライアントでcookiesを管理
 - 認証チェック: `supabase.auth.getUser()`でユーザー状態を確認
-- リダイレクト条件: 未認証かつ`/login`以外のパスにアクセス時
+- リダイレクト条件: 未認証かつ`/login`、`/signup`以外のパスにアクセス時
 - リダイレクト先: `/login?next=<現在のパス>`
-- 除外パス: `/login`と`/auth`で始まるパス
+- ログイン済みユーザー: `/login`、`/signup`にアクセス時は`/`にリダイレクト
+- 除外パス: `/login`、`/signup`、`/auth`で始まるパス
+
+【命名】
+- `updateSession`（セッション更新関数）
+- `middleware`（middleware関数）
+- `config`（設定オブジェクト）
+- `supabaseResponse`（レスポンスオブジェクト）
+- `supabase`（Supabaseクライアント）
+- `user`（ユーザー情報）
+
+【参照】
+- `createServerClient`（Supabaseクライアント作成）
+- `NextResponse`（Next.jsレスポンス制御）
+- `NextRequest`（Next.jsリクエスト型）
+- `cookies`（cookies管理）
+- `redirect`（リダイレクト）
 
 【使用タグ】
-- `updateSession`（セッション更新関数）
-- `createServerClient`（Supabaseクライアント）
+- `createServerClient`（Supabaseクライアント作成）
 - `NextResponse`（レスポンス制御）
+- `NextRequest`（リクエスト型）
+- `cookies`（cookies管理）
+- `redirect`（リダイレクト）
 
 ### ヒント
 
@@ -85,12 +103,24 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // ログイン済みユーザーがログイン・サインアップページにアクセスした場合、ルートにリダイレクト
+  if (
+    user &&
+    (request.nextUrl.pathname.startsWith("/login") ||
+      request.nextUrl.pathname.startsWith("/signup"))
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  // 未認証ユーザーが保護ページにアクセスした場合、ログインページにリダイレクト
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
+    !request.nextUrl.pathname.startsWith("/signup") &&
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
-    // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("next", request.nextUrl.pathname);
@@ -127,6 +157,14 @@ middlewareを有効化する設定ファイルを作成します。
 - マッチャー設定: 静的ファイルを除外
 - 除外パス: `_next/static`、`_next/image`、`favicon.ico`、画像ファイル
 
+【命名】
+- `middleware`（middleware関数）
+- `config`（設定オブジェクト）
+
+【参照】
+- `updateSession`（セッション更新関数）
+- `Request`（リクエスト型）
+
 【使用タグ】
 - `middleware`（middleware関数）
 - `config`（設定オブジェクト）
@@ -160,9 +198,9 @@ export const config = {
 };
 ```
 
-## 課題C：ダッシュボードページの作成（10分）
+## 課題C：ダッシュボードページの作成（8分）
 
-10分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
+8分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
 ### 仕様
 
@@ -173,6 +211,17 @@ export const config = {
 - ユーザー情報表示: メールアドレス、ユーザーID、作成日時
 - ログアウト機能: ボタンクリックでログアウト
 - レイアウト: 中央揃え、最大幅`max-w-3xl`
+
+【命名】
+- `DashboardPage`（コンポーネント名）
+- `supabase`（Supabaseクライアント）
+- `user`（ユーザー情報）
+- `error`（エラー情報）
+
+【参照】
+- `createClient`（Supabaseクライアント作成）
+- `signOut`（ログアウト関数）
+- `redirect`（リダイレクト）
 
 【使用タグ】
 - `div`（最上位コンテナー）
@@ -285,3 +334,6 @@ export default async function DashboardPage() {
 - ダッシュボードページで認証済みユーザー情報が表示される
 - ログアウトボタンで正常にログアウトできる
 - セッション状態が正しく管理される
+- ログイン済みユーザーがログインページにアクセスした際のリダイレクトが動作する
+- ログイン済みユーザーがサインアップページにアクセスした際のリダイレクトが動作する
+- 静的ファイルがmiddlewareの対象外になっている
