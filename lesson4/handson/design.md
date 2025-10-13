@@ -1,16 +1,16 @@
 # 対象者
-- React を理解している
-- Next.js の基本 (App Router, page.js / layout.js) を理解している
-- Supabase を使ったことがない、または軽く触った程度
+- Reactを理解している
+- Next.jsの基本 (App Router, page.js / layout.js) を理解している
+- Supabaseを使ったことがない、または軽く触った程度
 
 # 目的
 1. 認証 (Authentication) と認可 (Authorization) の違いを理解する
-2. Supabase Authentication を用いてメール+パスワードのサインアップ/ログイン/ログアウトを実装する
-3. Next.js の middleware でセッションを更新しつつ、未認証ユーザーをログインページへリダイレクトする方法を学ぶ
+2. Supabase Authenticationを用いてメール+パスワードのサインアップ/ログイン/ログアウトを実装する
+3. Next.jsのmiddlewareでセッションを更新しつつ、未認証ユーザーをログインページへリダイレクトする方法を学ぶ
 
 # 主要なスキル
 - Supabase Authentication (email/password)
-- @supabase/ssr と cookies を用いた SSR 連携
+- @supabase/ssrと cookies を用いた SSR 連携
 - middleware によるセッション更新と楽観的チェック
 - サーバーコンポーネントでの `redirect` と厳密ガード (`supabase.auth.getUser`)
 - `cookies` (非同期 API) の取り扱い

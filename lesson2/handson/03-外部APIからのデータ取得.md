@@ -15,6 +15,7 @@ Next.jsで外部APIからデータを取得する方法を学ぶ。
 5分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
 ### 仕様
+
 外部APIレスポンス全体を表す型を専用ファイルに定義し、再利用できるようにします。
 
 - 作成/編集ファイル: `src/types/user.ts`
@@ -23,17 +24,15 @@ Next.jsで外部APIからデータを取得する方法を学ぶ。
 - エクスポート: `export interface User { ... }` で他ファイルからインポート可能にする
 
 【使用タグ】
- - `<none>` 型定義のみ（UI要素なし）
+- 型定義のみ（UI要素なし）
 
 ### ヒント
-- Tailwindの例：該当なし（型のみ）
-- 公式レスポンス構造をブラウザで開きコピーせず手入力で理解
+- 公式レスポンス構造をブラウザで開き、コピーせず手入力で理解
 - ネストはそのまますべて保持
 
 ### 解答例
 
 ```ts
-// src/types/user.ts
 export interface User {
   id: number;
   name: string;
@@ -63,14 +62,13 @@ export interface User {
 - 全フィールドを先に定義しておくと後続課題で型拡張が不要。
 - ネストを忠実に写経することで構造理解を促進。
 
----
-
 ## 課題B：ユーザー一覧ページ（25分）
 
 25分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
 ### 仕様
-外部APIから取得した10件のユーザーをグリッドでカード表示します。
+
+外部APIから取得した10件のユーザーを表示します。
 
 - 編集/対象ファイル: `src/app/users/page.tsx`
 - データ取得処理
@@ -78,36 +76,37 @@ export interface User {
   - データ取得: `fetch('https://jsonplaceholder.typicode.com/users')`で取得し、失敗時は例外を投げる
 - ページ表示
   - コンポーネント: `export default async function UsersPage()`（サーバーコンポーネント）
-  - 見出し: ページ先頭に「ユーザ一覧」大きめ見出し（下余白32px）
-  - グリッド: 1列→（768px以上）2列→（1024px以上）3列 / カード間余白24px
-  - カード: 白背景 / 角丸8px / 内側余白24px / 初期影→ホバーで強い影に200ms遷移
-  - テキスト: ID小さく淡色 / ユーザー名やや大きく太字 / 会社名は本文より淡色
-  - リンク: カード末尾に詳細ページボタン（青→ホバー濃い青）
-  - ユーザー情報表示: ユーザー情報の `id` `username` `company.name` を利用
+  - 見出し「ユーザー一覧」を先頭に表示する。
+  - ユーザー情報の `id` `username` `company.name` を表示する。
 
 【使用タグ】
- - `<div>` ルートラッパ
-   - `<h1>` 見出し（ページタイトル）
-   - `<ul>` 一覧
-     - `<li>` カード（繰り返し）
-       - `<div>` ヘッダー行（テキスト）
-         - `<div>` テキストブロック
-           - `<p>` ID行
-           - `<h3>` ユーザ名
-       - `<div>` 会社情報ブロック
-         - `<p>` 会社行
-           - `<span>` ラベル「会社:」
-       - `<Link>` 詳細ボタン
+- （新規）`<div>`: 一覧全体のラッパー。
+  - （新規）`<h1>`: ページタイトルを大きく太字で表示し、直下に余白を設ける。
+  - （新規）`<ul>`: 一覧をグリッド配置し、アイテム間に間隔を設ける。中・大画面で列数を増やす。
+    - （新規）`<li>`: 白背景で角丸と影を付けたカード。ホバーで影が強調される。内側に余白。
+      - （新規）`<div>`: カード上部の情報ブロックに下余白を付与。
+        - （新規）`<p>`: IDを小さめかつ淡い色で表示。
+        - （新規）`<h3>`: ユーザー名をやや大きく太字で表示。
+      - （新規）`<div>`: 会社情報ブロックに下余白を付与。
+        - （新規）`<p>`: 本文色で会社名行を表示し、下余白を設ける。
+          - （新規）`<span>`: ラベル部分のみを中太字にする。
+      - （新規）`<Link>`: 青地に白文字のボタン風リンク。角丸で、ホバー時に色が濃くなり、色の遷移がかかる。小さめの文字サイズと中太字。
 
 ### ヒント
-- Tailwindの例：`grid` `gap-6` `md:grid-cols-2` `lg:grid-cols-3` `rounded-lg` `shadow-md` `hover:shadow-lg` `transition-shadow`
-- レイアウト段階指定: モバイル→中→大の順でクラス追加
+- 使用クラス一覧:
+  - `h1`: `text-3xl`, `font-bold`, `mb-8`, `text-gray-800`
+  - `ul`: `grid`, `gap-6`, `md:grid-cols-2`, `lg:grid-cols-3`
+  - `li`: `bg-white`, `rounded-lg`, `shadow-md`, `p-6`, `hover:shadow-lg`, `transition-shadow`
+  - `p（ID）`: `text-sm`, `text-gray-500`
+  - `h3`: `font-semibold`, `text-lg`, `text-gray-800`
+  - `div（会社ブロック内のp）`: `text-gray-600`, `mb-2`
+  - `span（ラベル）`: `font-medium`
+  - `Link`: `inline-block`, `bg-blue-600`, `text-white`, `px-4`, `py-2`, `rounded-md`, `hover:bg-blue-700`, `transition-colors`, `text-sm`, `font-medium`
 - エラー: `if (!response.ok) throw new Error(...)`
 
 ### 解答例
 
 ```tsx
-// src/app/users/page.tsx
 import Link from 'next/link';
 import { User } from '@/types/user';
 
@@ -156,16 +155,12 @@ export default async function UsersPage() {
 
 ### 実装ポイント
 - サーバーコンポーネントのため状態フック不要。
-- 画像はIDベースURLでユニーク化。
 - 見出し文言は実コードと完全一致（Strict Parity）。
-- カード階層を増やさずスタイルはユーティリティで直接指定。
 
 ## 章末の確認
 - `src/types/user.ts` に `User` 型が定義され全フィールド保持。
 - `/users` で10件のカードが表示。
-- 列数が幅に応じ1→2→3に変化。
 - 各カードにID/ユーザ名/会社名/「詳細を見る」ボタン。
-- ホバーで影が強調される。
 - ネットワークタブの `users` 取得が1回。
 - コンソールエラーなし。
 
@@ -173,5 +168,3 @@ export default async function UsersPage() {
 ```bash
 npm run dev
 ```
-
-次章でユーザー詳細ページ（Dynamic Routes）を実装します。

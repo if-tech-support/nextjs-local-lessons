@@ -48,11 +48,7 @@ Next.jsのmiddlewareを使用してセッション管理と認証ガードを実
 - `redirect`（リダイレクト）
 
 【使用タグ】
-- `createServerClient`（Supabaseクライアント作成）
-- `NextResponse`（レスポンス制御）
-- `NextRequest`（リクエスト型）
-- `cookies`（cookies管理）
-- `redirect`（リダイレクト）
+- 該当なし
 
 ### ヒント
 
@@ -95,15 +91,10 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // ログイン済みユーザーがログイン・サインアップページにアクセスした場合、ルートにリダイレクト
   if (
     user &&
     (request.nextUrl.pathname.startsWith("/login") ||
@@ -114,7 +105,6 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 未認証ユーザーが保護ページにアクセスした場合、ログインページにリダイレクト
   if (
     !user &&
     !request.nextUrl.pathname.startsWith("/login") &&
@@ -126,19 +116,6 @@ export async function updateSession(request: NextRequest) {
     url.searchParams.set("next", request.nextUrl.pathname);
     return NextResponse.redirect(url);
   }
-
-  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-  // creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely.
 
   return supabaseResponse;
 }
@@ -166,8 +143,10 @@ middlewareを有効化する設定ファイルを作成します。
 - `Request`（リクエスト型）
 
 【使用タグ】
-- `middleware`（middleware関数）
-- `config`（設定オブジェクト）
+- 該当なし
+
+【使用クラス一覧】
+UI描画なし（設定ファイル）
 
 ### ヒント
 
@@ -186,19 +165,12 @@ export async function middleware(request: Request) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
-     */
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
 ```
 
-## 課題C：ダッシュボードページの作成（8分）
+## 課題C：ダッシュボードページの作成（20分）
 
 8分ほどヒントを参考にして仕様どおりにコーディングに挑戦し、その後に解答例で確認しましょう。
 
@@ -224,22 +196,39 @@ export const config = {
 - `redirect`（リダイレクト）
 
 【使用タグ】
-- `div`（最上位コンテナー）
-  - `div`（コンテンツラッパー）
-    - `h1`（ページタイトル）
-    - `p`（説明文）
-    - `div`（ユーザー情報カード）
-      - `div`（ヘッダー）
-        - `h3`（カードタイトル）
-        - `p`（説明文）
-      - `div`（情報エリア）
-        - `dl`（定義リスト）
-          - `div`（情報項目）
-            - `dt`（項目名）
-            - `dd`（項目値）
-    - `div`（ログアウトエリア）
-      - `form`（ログアウトフォーム）
-        - `button`（ログアウトボタン）
+- （新規）`div`（ページラッパー）: ページ全体の余白 / 最大幅レイアウト調整
+  - （新規）`div`（コンテンツラッパー / max-w-3xl）: 横幅制限と中央寄せ
+    - （新規）`h1`: ページタイトル（ダッシュボード）
+    - （新規）`p`: ページ概要テキスト
+    - （新規）`div`（カード外枠）: ユーザー情報表示カード（背景 / 影 / 角丸）
+      - （新規）`div`（カードヘッダー）: 見出しと補足説明のラッパー
+  - （新規）`h3`: カード見出し（"ユーザー情報"）
+  - （新規）`p`（補足説明）:「あなたのアカウント情報」
+      - （新規）`div`（情報エリアラッパー）: 上部境界線 + 定義リスト包囲
+        - （新規）`dl`: ユーザー属性の定義リスト全体
+          - （繰り返し）`div`（行ラッパー：奇数/偶数交互）:
+            - （新規）`dt`: ラベル（メールアドレス / ユーザーID / 作成日時）
+            - （新規）`dd`: 対応する値
+    - （新規）`div`（ログアウトエリア）: ボタンブロック余白調整
+      - （新規）`form`: Server Action `signOut` をトリガー
+        - （新規）`button`: サインアウト送信ボタン
+
+【使用クラス一覧】
+- `ページラッパーdiv`: `max-w-7xl` `mx-auto` `px-4` `sm:px-6` `lg:px-8` `py-12`
+- `コンテンツラッパーdiv`: `max-w-3xl` `mx-auto`
+- `見出しh1`: `text-3xl` `font-bold` `text-gray-900`
+- `説明p`: `mt-2` `text-lg` `text-gray-600`
+- `カード外枠div`: `mt-8` `bg-white` `shadow` `overflow-hidden` `sm:rounded-lg`
+- `カードヘッダーdiv`: `px-4` `py-5` `sm:px-6`
+- `カード見出しh3`: `text-lg` `leading-6` `font-medium` `text-gray-900`
+- `カード補足p`: `mt-1` `max-w-2xl` `text-sm` `text-gray-500`
+- `情報エリアラッパーdiv`: `border-t` `border-gray-200`
+- `行div（奇数）`: `bg-gray-50` `px-4` `py-5` `sm:grid` `sm:grid-cols-3` `sm:gap-4` `sm:px-6`
+- `行div（偶数）`: `bg-white` `px-4` `py-5` `sm:grid` `sm:grid-cols-3` `sm:gap-4` `sm:px-6`
+- `dt`: `text-sm` `font-medium` `text-gray-500`
+- `dd`: `mt-1` `text-sm` `text-gray-900` `sm:mt-0` `sm:col-span-2`
+- `ログアウトエリアdiv`: `mt-8`
+- `ログアウトbutton`: `inline-flex` `items-center` `px-4` `py-2` `border` `border-transparent` `text-sm` `font-medium` `rounded-md` `shadow-sm` `text-white` `bg-red-600` `hover:bg-red-700` `focus:outline-none` `focus:ring-2` `focus:ring-offset-2` `focus:ring-red-500`
 
 ### ヒント
 

@@ -59,7 +59,7 @@ Supabaseプロジェクト命名の指針（継続利用のため）
    - `memos`テーブル作成、`createSupabaseClient`、`apiUrl`、`Memo`型定義。
 4. `04-API（前編：一覧・作成）.md`
    - `GET /api/memos`、`POST /api/memos` の実装と動作確認。
-5. `05-1-新規作成フォームのUI.md`
+5. `05-新規作成フォームのUI.md`
    - フォームのUI（見出し・入力・ボタン）を作成（機能は未実装）。
 6. `06-フォーム送信とエラーハンドリング.md`
    - フォームをクライアント化し、POST/エラー表示/refreshを実装。

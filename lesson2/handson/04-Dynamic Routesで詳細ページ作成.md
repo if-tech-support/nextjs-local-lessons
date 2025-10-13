@@ -18,32 +18,33 @@ Dynamic Routesを使った詳細ページの作成方法を学ぶ。
 
 ### 仕様
 
-`src/app/users/[id]/page.tsx` を作成/編集し、ページの骨格とデータ取得を実装します。
+`src/app/users/[id]/page.tsx` を作成し、ページのレイアウトとデータ取得を実装します。
 
 - サーバーコンポーネント（`async`関数）として実装し、`params.id` を用いて外部APIからユーザを取得する（`useState`/`useEffect`は使わない）。
-- ページタイトル `<h1>` に「ユーザ詳細」を表示（フォントサイズ約1.875rem、太字、下余白32px、文字色#1f2937相当）。
-- 詳細カードは最大幅672pxで左右中央寄せ、背景は白、角丸8px、影を付与、内側余白は32pxとする。
-- カード上部ヘッダー行に、ユーザー名 `<h2>`（下余白8px、太字）と本名 `<p>` を表示。
+- ページタイトル `<h1>` に「ユーザ詳細」を表示する。
+- カード上部ヘッダー行に、ユーザー名 `<h2>` と本名 `<p>` を表示する。
 - 不要な余分のラッパー要素は作らない（最小の階層構造）。
-- データ取得関数は `getUser(id: string): Promise<User>` とし、引数は文字列のID、戻り値はユーザー1件の非同期結果とする。取得先は `https://jsonplaceholder.typicode.com/users/{id}`。HTTPステータスが成功以外のときは「Failed to fetch user」で例外を送出する。
+- データ取得関数は `getUser(id: string): Promise<User>` とし、取得先は `https://jsonplaceholder.typicode.com/users/{id}`。成功以外は例外を送出する。
 - ページ関数の引数は `UserDetailPageProps` とし、`params: Promise<{ id: string }>` を受け取る。`export default async function UserDetailPage({ params }: UserDetailPageProps)` の中で `const { id } = await params` として取り出し、`getUser(id)` を呼び出して取得する。
 
 【使用タグ】
-- `<div>` 最上位コンテナー
-  - `<h1>` ページタイトル
-  - `<div>` 詳細カード
-    - `<div>` ヘッダー行
-      - `<div>` 基本情報
-        - `<h2>` ユーザー名（username）
-        - `<p>` 本名（name）
+- （新規）`<div>`: 詳細ページ全体のラッパー。
+  - （新規）`<h1>`: 大きめの太字見出しを表示し、直下に余白を付ける。
+  - （新規）`<div>`: 白背景・角丸・影・内側余白・最大幅を持つカード。
+    - （新規）`<div>`: 上部情報ブロックに下余白を付ける。
+      - （新規）`<h2>`: ユーザー名を太字で表示し、直下に余白を付ける。
+      - （新規）`<p>`: 本文色で本名を表示。
 
 ### ヒント
 
-Tailwindの例：`mb-8` `shadow-lg` `rounded-lg` `mx-auto`
-
+- 使用クラス一覧:
+  - `h1`: `text-3xl`, `font-bold`, `mb-8`, `text-gray-800`
+  - `カードdiv`: `bg-white`, `rounded-lg`, `shadow-lg`, `p-8`, `max-w-2xl`
+  - `上部情報div`: `mb-8`
+  - `h2`: `text-2xl`, `font-bold`, `text-gray-800`, `mb-2`
+  - `p（本名）`: `text-gray-600`
 - 動的セグメント（`[id]`）の `params.id` を引数に取得関数へ渡す。
 - サーバーコンポーネントで `async` 関数を使い直接 `fetch` 実行。
-- この課題ではヘッダー（ユーザー名/本名）までを表示する。
 
 ### 解答例
 
@@ -98,36 +99,44 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
 
 対象ファイル: `src/app/users/[id]/page.tsx` を編集します。課題Aで作成したヘッダーの下に情報セクションを追加し、次を満たしてください。
 
-- 情報セクション全体は縦に積み、各ブロック間の縦余白は16pxとする。
-- 連絡先情報ブロック：`<h3>` 見出し（下余白8px）→ メール / 電話 / ウェブサイトの各行。
-  - ラベルは太字とする。
-  - ウェブサイトはリンク（文字色は青系#2563eb相当、通常は下線なし、ホバー時のみ下線）。
-- 会社情報ブロック：会社名とキャッチフレーズを表示。
-- 連絡先・会社情報ブロックには下境界線を付け、下方向の内側余白16pxを確保する。
+- 連絡先情報ブロックに、メール / 電話 / ウェブサイトの各行を表示する。
+  - ラベルは太字にする。
+  - ウェブサイトは外部リンク（`target="_blank" rel="noopener noreferrer"`）。
+- 会社情報ブロックに、会社名とキャッチフレーズを表示する。
 
 【使用タグ】
-- `<div>` 情報セクション全体
-  - `<div>` 連絡先情報ブロック
-    - `<h3>` 見出し
-    - `<p>` メール行
-      - `<span>` ラベル
-    - `<p>` 電話行
-      - `<span>` ラベル
-    - `<p>` ウェブサイト行
-      - `<span>` ラベル
-      - `<a>` 外部リンク
-  - `<div>` 会社情報ブロック
-    - `<h3>` 見出し
-    - `<p>` 会社名行
-      - `<span>` ラベル
-    - `<p>` キャッチフレーズ行
-      - `<span>` ラベル
+- `<div>`
+  - `<h1>`
+  - `<div>`
+    - `<div>`
+      - `<h2>`
+      - `<p>`
+  - （新規）`<div>`: 情報セクション全体を縦方向に並べる。
+    - （新規）`<div>`: 連絡先情報ブロック（下境界線と下方向の内側余白）。
+      - （新規）`<h3>`: セクション見出しを中程度の太さで表示し、直下に余白。
+      - （新規）`<p>`: メール行。
+        - （新規）`<span>`: 行のラベルのみ中太字にする。
+      - （新規）`<p>`: 電話行。
+        - （新規）`<span>`: 行のラベルのみ中太字にする。
+      - （新規）`<p>`: ウェブサイト行。
+        - （新規）`<span>`: 行のラベルのみ中太字にする。
+        - （新規）`<a>`: 青系のリンク色で、ホバー時のみ下線を表示。
+    - （新規）`<div>`: 会社情報ブロック（下境界線と下方向の内側余白）。
+      - （新規）`<h3>`: セクション見出しを中程度の太さで表示し、直下に余白。
+      - （新規）`<p>`: 会社名行。
+        - （新規）`<span>`: 行のラベルのみ中太字にする。
+      - （新規）`<p>`: キャッチフレーズ行。
+        - （新規）`<span>`: 行のラベルのみ中太字にする。
 
 ### ヒント
 
-Tailwindの例：`space-y-4` `border-b pb-4` `text-blue-600` `hover:underline` `font-medium`
-
-- ラベルは `<span className="font-medium">` で太字化する。
+- 使用クラス一覧:
+  - `情報セクションdiv`: `space-y-4`
+  - `各ブロックdiv`: `border-b`, `pb-4`
+  - `h3`: `font-semibold`, `text-gray-700`, `mb-2`
+  - `p`: `text-gray-600`
+  - `span（ラベル）`: `font-medium`
+  - `a（リンク）`: `text-blue-600`, `hover:underline`
 - 外部リンクは `target="_blank" rel="noopener noreferrer"` を付与する。
 
 ### 解答例
@@ -162,7 +171,7 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
     <div>
       <h1 className="text-3xl font-bold mb-8 text-gray-800">ユーザ詳細</h1>
 
-  <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-2xl">
         <div className="mb-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             {user.username}
@@ -220,21 +229,42 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
 - 住所ブロックを追加：
   - 1行目に「通り + スイート」。
   - 2行目に「市区 + 郵便番号」。
-- 余白・見出しのトーンを他ブロックと合わせる（見出しの下余白約8px、本文は落ち着いたやや淡い文字色）。
 - 最終的にカード内部の階層が最小構成であることを確認。
 
 【使用タグ】
-- `<div>` 住所ブロック
-  - `<h3>` 見出し
-  - `<p>` 1行目（通り + スイート）
-  - `<p>` 2行目（市区 + 郵便番号）
+- `<div>`
+  - `<h1>`
+  - `<div>`
+    - `<div>`
+      - `<h2>`
+      - `<p>`
+  - `<div>`
+    - `<div>`
+      - `<h3>`
+      - `<p>`
+        - `<span>`
+      - `<p>`
+        - `<span>`
+      - `<p>`
+        - `<span>`
+        - `<a>`
+    - `<div>`
+      - `<h3>`
+      - `<p>`
+        - `<span>`
+      - `<p>`
+        - `<span>`
+    - （新規）`<div>`: 住所ブロック。
+      - （新規）`<h3>`: セクション見出しを中程度の太さで表示し、直下に余白。
+      - （新規）`<p>`: 1行目（通り + スイート）。
+      - （新規）`<p>`: 2行目（市区 + 郵便番号）。
 
 ### ヒント
 
-Tailwindの例：`mb-2` `text-gray-600`
-
+- 使用クラス一覧:
+  - `h3`: `font-semibold`, `text-gray-700`, `mb-2`
+  - `p`: `text-gray-600`
 - 住所は2行構成で段落要素を2つ用いる。
-- 既存ブロックの余白や文字色のトーンに合わせて統一する。
 
 ### 解答例
 
@@ -329,7 +359,6 @@ export default async function UserDetailPage({ params }: UserDetailPageProps) {
 ### 実装ポイント
 
 - サーバーサイドfetchにより初回表示で完全レンダリング。
-- 情報ブロックは縦方向の余白ユーティリティで間隔確保。
 - 外部リンクは `rel="noopener noreferrer"` を忘れない。
 
 ## 章末の確認
