@@ -4,6 +4,7 @@ import type { Recipe } from '@/types/recipe';
 export const dynamic = 'force-dynamic'; // 毎リクエスト実行
 
 async function getRecipes(): Promise<Recipe[]> {
+  console.log('SSR: データ取得中...');
   const res = await fetch('https://api.vercel.app/blog', {
     cache: 'no-store', // データは都度取得
   });

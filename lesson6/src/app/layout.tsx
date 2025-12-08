@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'RecipeModes',
+  title: 'Recipes',
   description: 'CSR / SSR / SSG / ISR を比べて学ぶ',
 };
 
@@ -30,7 +30,7 @@ export default function RootLayout({
           <header className="bg-pink-500 text-white">
             <div className="max-w-3xl mx-auto flex justify-between p-3">
               <Link href="/recipes-ssg" className="font-bold">
-                RecipeModes
+                Recipes
               </Link>
               <nav className="flex gap-3">
                 <Link href="/recipes-csr" className="hover:underline">
@@ -50,7 +50,7 @@ export default function RootLayout({
           </header>
           <main className="max-w-3xl mx-auto w-full p-4">{children}</main>
           <footer className="bg-slate-50 text-slate-500">
-            <div className="max-w-3xl mx-auto p-3">© 2025 RecipeModes</div>
+            <div className="max-w-3xl mx-auto p-3">© 2025 Recipes</div>
           </footer>
         </div>
       </body>

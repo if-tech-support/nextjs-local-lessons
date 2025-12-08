@@ -11,12 +11,13 @@ export default function Page() {
 
   useEffect(() => {
     const run = async () => {
+      console.log('CSR: データ取得中...');
       try {
-        const res = await fetch('https://api.vercel.app/blog');
+        const res = await fetch('/api/proxy-recipes');
         const data = (await res.json()) as Recipe[];
-        console.log(data);
         setRecipes(data);
         setFetchedAt(new Date().toLocaleTimeString('ja-JP'));
+        console.log('CSR: データ取得完了');
       } catch {
         setErr('取得に失敗しました');
       }

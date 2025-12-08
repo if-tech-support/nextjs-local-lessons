@@ -5,9 +5,11 @@ import Link from 'next/link';
 export const revalidate = 60; // 60秒で再検証
 
 async function getRecipes(): Promise<Recipe[]> {
-  const res = await fetch('https://api.vercel.app/blog', {
-    next: { revalidate },
-  });
+  console.log('ISR: データ取得中...');
+  const res = await fetch('https://api.vercel.app/blog');
+  if (!res.ok) {
+    throw new Error('データの取得に失敗しました');
+  }
   return res.json();
 }
 

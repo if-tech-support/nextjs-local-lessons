@@ -4,11 +4,11 @@ import type { Recipe } from '@/types/recipe';
 export const dynamic = 'force-static'; // 既定: static
 
 async function getRecipes(): Promise<Recipe[]> {
-  const res = await fetch('https://api.vercel.app/blog', {
-    // 既定は HTML プリレンダ＋データは force-cache 相当
-    cache: 'force-cache',
-    // next: { revalidate: false } // 明示しなくても SSG
-  });
+  console.log('SSG: データ取得中...');
+  const res = await fetch('https://api.vercel.app/blog');
+  if (!res.ok) {
+    throw new Error('データの取得に失敗しました');
+  }
   return res.json();
 }
 

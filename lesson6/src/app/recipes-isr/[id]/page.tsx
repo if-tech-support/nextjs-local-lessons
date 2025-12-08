@@ -1,24 +1,21 @@
 import type { Recipe } from '@/types/recipe';
-import { formatDate } from '@/utils/format';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 export const revalidate = 60;
 
+// 1, 2, 3 のIDのみビルド時に生成
+export async function generateStaticParams() {
+  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+}
+
 async function getRecipe(id: string): Promise<Recipe | null> {
-  const res = await fetch(`https://api.vercel.app/blog/${id}`, { next: { revalidate } });
+  const res = await fetch(`https://api.vercel.app/blog/${id}`);
   if (!res.ok) return null;
   return res.json();
 }
 
-// 一部のみ事前生成（例: 1,2,3）
-export async function generateStaticParams() {
-  return ['1', '2', '3'].map((id) => ({ id }));
-}
-
-type Props = { params: Promise<{ id: string }> };
-
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const start = Date.now();
   const { id } = await params;
   const data = await getRecipe(id);
@@ -28,7 +25,7 @@ export default async function Page({ params }: Props) {
     <article className="grid gap-3">
       <h1 className="text-xl font-bold">{data.title}</h1>
       <div className="text-slate-500 text-sm">
-        {formatDate(data.date)} / {data.author}
+        {data.date} / {data.author}
       </div>
       <div className="text-slate-500 text-sm">Rendered at: {renderedAt}</div>
       <p className="text-slate-700">{data.content}</p>
