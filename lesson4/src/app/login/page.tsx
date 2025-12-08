@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { signInAction } from "@/lib/actions";
-import { createClient } from "@/lib/supabase/client";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { signIn } from '@/lib/actions';
+import { createClient } from '@/lib/supabase/client';
 
 export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export default function LoginPage() {
 
       if (user) {
         // ログイン済みの場合はルートにリダイレクト
-        router.push("/");
+        router.push('/');
         return;
       }
 
@@ -37,13 +37,13 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const result = await signInAction(formData);
+      const result = await signIn(formData);
       if (result) {
         setError(result.message);
       }
       // 成功時はServer Actionでredirectされるため、ここでは何もしない
     } catch (error) {
-      setError("ログインに失敗しました");
+      setError(`ログインに失敗しました: ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -55,7 +55,7 @@ export default function LoginPage() {
       <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">認証状態を確認中...</p>
+          <p className="mt-2 text-gray-600">認証状態を確認中</p>
         </div>
       </div>
     );
@@ -65,24 +65,17 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
         <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            アカウントにログイン
-          </h2>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">アカウントにログイン</h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             アカウントをお持ちでない場合は
-            <Link
-              href="/signup"
-              className="font-medium text-blue-600 hover:text-blue-500 underline"
-            >
+            <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500 underline">
               新規登録
             </Link>
             してください
           </p>
         </div>
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">
-            {error}
-          </div>
+          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm">{error}</div>
         )}
 
         <form className="mt-8 space-y-6" action={handleSignIn}>
@@ -123,7 +116,7 @@ export default function LoginPage() {
               disabled={isLoading}
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLoading ? "処理中..." : "ログイン"}
+              {isLoading ? '処理中...' : 'ログイン'}
             </button>
           </div>
         </form>
